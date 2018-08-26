@@ -24,8 +24,9 @@
 </head>
 <body>
 
+<a href="authors">Authors</a>
 <!-- Person edition -->
-<form id="edit-form" th:action="@{/edit(id=${author.id})}" th:method="post" action="edit.html">
+<form id="edit-form" th:action="@{/author(id=${author.id})}" th:method="post" action="authorEdit.html">
     <h1>Author Info:</h1>
 
     <div class="row">

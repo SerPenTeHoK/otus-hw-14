@@ -15,9 +15,9 @@
     </style>
 </head>
 <body>
-<h1>Persons:</h1>
+<h1>Authors:</h1>
 
-<table class="persons">
+<table class="authors">
     <thead>
     <tr>
         <th>ID</th>
@@ -30,8 +30,11 @@
         <td th:text="${author.id}">1</td>
         <td th:text="${author.name}">John Doe</td>
         <td>
-            <a th:href="@{/edit(id=${author.id})}" href="edit.html">Edit</a>
+            <a th:href="@{/author(id=${author.id})}" href="authorEdit.html">Edit</a>
         </td>
+        <TD>
+            <a th:href="@{/deleteAuthor(id=${author.id})}" href="deleteAuthor">Del</a>
+        </TD>
     </tr>
     </tbody>
 </table>
