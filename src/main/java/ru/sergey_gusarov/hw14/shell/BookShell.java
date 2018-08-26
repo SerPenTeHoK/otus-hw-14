@@ -50,7 +50,7 @@ public class BookShell {
 
     @ShellMethod("Book list")
     public String bookList() {
-        return bookService.FindAll().toString();
+        return bookService.findAll().toString();
     }
 
     @ShellMethod("Book add comment")

@@ -104,7 +104,7 @@ class BookServiceTest {
     @Test
     @DisplayName("List")
     void bookList() {
-        List<Book> books = bookService.FindAll();
+        List<Book> books = bookService.findAll();
         long count = books.size();
         assertEquals(1L, count);
         assertEquals(books.get(0).getTitle(), "Title3", "Title not valid");
@@ -112,16 +112,16 @@ class BookServiceTest {
     @Test
     @DisplayName("Add comment")
     void addComment() {
-        List<Book> books = bookService.FindAll();
+        List<Book> books = bookService.findAll();
         bookService.addComment(books.get(0).getId(), "Comment1");
-        books = bookService.FindAll();
+        books = bookService.findAll();
         assertEquals(books.get(0).getBookComments().get(0).getText(), "Comment1", "Book.Comment s not stored");
     }
 
     @Test
     @DisplayName("Add comment")
     void findByAuthorName() {
-        List<Book> books = bookService.FindAll();
+        List<Book> books = bookService.findAll();
         Book book = books.get(0);
         List<Book> booksFromDb = bookService.findByAuthorName(book.getAuthors().get(0).getName());
     }

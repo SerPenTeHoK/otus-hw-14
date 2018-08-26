@@ -3,10 +3,12 @@ package ru.sergey_gusarov.hw14.rest.controlles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.exception.NotFoundException;
-import ru.sergey_gusarov.hw14.repository.author.AuthorRepository;
 import ru.sergey_gusarov.hw14.service.books.AuthorService;
 
 import java.util.List;
@@ -41,16 +43,15 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/author", method = RequestMethod.POST)
-    public String editAuthor(@ModelAttribute Author author){
+    public String editAuthor(@ModelAttribute Author author) {
         authorService.save(author);
         String id = author.getId();
         return "redirect:/authors";
     }
 
-    @RequestMapping(value = "/deleteAuthor" )
-    public String deleteAuthor(@ModelAttribute Author author){
+    @RequestMapping(value = "/deleteAuthor")
+    public String deleteAuthor(@ModelAttribute Author author) {
         authorService.deleteById(author.getId());
         return "redirect:/authors";
     }
-
 }

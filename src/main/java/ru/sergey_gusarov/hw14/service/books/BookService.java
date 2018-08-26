@@ -20,7 +20,7 @@ public interface BookService {
 
     Book add(String title, List<Author> authors, List<Genre> genres);
 
-    List<Book> FindAll();
+    List<Book> findAll();
 
     void deleteAll();
 
