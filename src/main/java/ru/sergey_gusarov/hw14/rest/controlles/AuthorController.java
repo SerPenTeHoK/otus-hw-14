@@ -21,14 +21,18 @@ public class AuthorController {
     }
 
     @RequestMapping("/authors")
-    //@RequestMapping("/authors")
     public String listAuthorPage(Model model) {
         List<Author> authors = authorService.findAll();
         model.addAttribute("authors", authors);
         return "authorsList";
     }
 
-    //@GetMapping("/edit")
+    @RequestMapping("/newAuthor")
+    public String newAuthorPage(@ModelAttribute Author author) {
+        authorService.save(author);
+        return "authorEdit";
+    }
+
     @RequestMapping("/author")
     public String authorPage(@RequestParam("id") String id, Model model) {
         Author author = authorService.getById(id).orElseThrow(NotFoundException::new);
@@ -40,7 +44,7 @@ public class AuthorController {
     public String editAuthor(@ModelAttribute Author author){
         authorService.save(author);
         String id = author.getId();
-        return "redirect:/author?id=" + id;
+        return "redirect:/authors";
     }
 
     @RequestMapping(value = "/deleteAuthor" )
