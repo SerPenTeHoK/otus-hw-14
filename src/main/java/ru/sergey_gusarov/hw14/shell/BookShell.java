@@ -5,7 +5,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.domain.books.Genre;
-import ru.sergey_gusarov.hw14.service.BookService;
+import ru.sergey_gusarov.hw14.service.books.BookService;
 
 import java.util.ArrayList;
 import java.util.List;

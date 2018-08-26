@@ -1,4 +1,4 @@
-package ru.sergey_gusarov.hw14.service;
+package ru.sergey_gusarov.hw14.service.books;
 
 import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.domain.books.Book;

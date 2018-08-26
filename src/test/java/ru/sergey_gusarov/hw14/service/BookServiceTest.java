@@ -12,6 +12,7 @@ import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.domain.books.Book;
 import ru.sergey_gusarov.hw14.domain.books.Genre;
 import ru.sergey_gusarov.hw14.repository.author.AuthorRepository;
+import ru.sergey_gusarov.hw14.service.books.BookService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.sergey_gusarov.hw14.service;
+package ru.sergey_gusarov.hw14.service.books.impl;
 
 import org.springframework.stereotype.Service;
 import ru.sergey_gusarov.hw14.domain.books.Author;
@@ -8,6 +8,7 @@ import ru.sergey_gusarov.hw14.domain.books.Genre;
 import ru.sergey_gusarov.hw14.exception.NotFoundException;
 import ru.sergey_gusarov.hw14.repository.author.AuthorRepository;
 import ru.sergey_gusarov.hw14.repository.book.BookRepository;
+import ru.sergey_gusarov.hw14.service.books.BookService;
 
 import java.util.List;
 import java.util.Optional;
