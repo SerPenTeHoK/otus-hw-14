@@ -21,22 +21,22 @@ public class BookShell {
 
     @ShellMethod("Book count")
     public long bookCount() {
-        return bookService.bookCount();
+        return bookService.count();
     }
 
     @ShellMethod("Book get by id")
     public String bookGetById(@ShellOption String id) {
-        return bookService.bookGetById(id).get().toString();
+        return bookService.findById(id).get().toString();
     }
 
     @ShellMethod("Book get by id")
     public String bookGetByTitle(@ShellOption String title) {
-        return bookService.bookGetByTitle(title).toString();
+        return bookService.findByTitle(title).toString();
     }
 
     @ShellMethod("Book delete by id")
     public void bookDeleteById(@ShellOption String id) {
-        bookService.bookDeleteById(id);
+        bookService.deleteById(id);
     }
 
     @ShellMethod("Book insert")
@@ -45,12 +45,12 @@ public class BookShell {
         authors.add(new Author(authorName));
         List<Genre> genres = new ArrayList<>(1);
         genres.add(new Genre(genreName));
-        bookService.save(title, authors, genres);
+        bookService.add(title, authors, genres);
     }
 
     @ShellMethod("Book list")
     public String bookList() {
-        return bookService.bookList().toString();
+        return bookService.FindAll().toString();
     }
 
     @ShellMethod("Book add comment")

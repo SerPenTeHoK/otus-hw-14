@@ -8,17 +8,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-    long bookCount();
+    long count();
 
-    Optional<Book> bookGetById(String id);
+    Optional<Book> findById(String id);
 
-    List<Book> bookGetByTitle(String title);
+    List<Book> findByTitle(String title);
 
-    void bookDeleteById(String id);
+    void deleteById(String id);
 
-    Book save(String title, List<Author> authors, List<Genre> genres);
+    Book save(Book book);
 
-    List<Book> bookList();
+    Book add(String title, List<Author> authors, List<Genre> genres);
+
+    List<Book> FindAll();
 
     void deleteAll();
 
