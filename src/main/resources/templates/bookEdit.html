@@ -51,6 +51,7 @@
                     <td><input type="text" th:field="${book.authors[__${itemStat.index}__].id}"/></td>
                     <td><input type="text" th:field="${book.authors[__${itemStat.index}__].name}"/></td>
                 </tr>
+                <a th:href="@{/newAuthorForBook(id=${book.id})}" href="authorEdit.html">Add author</a>
             </table>
             <h2>Comments</h2>
             <table align="left" width="50%">

@@ -8,18 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.sergey_gusarov.hw14.domain.books.Author;
+import ru.sergey_gusarov.hw14.domain.books.Book;
 import ru.sergey_gusarov.hw14.exception.NotFoundException;
 import ru.sergey_gusarov.hw14.service.books.AuthorService;
+import ru.sergey_gusarov.hw14.service.books.BookService;
 
 import java.util.List;
 
 @Controller
 public class AuthorController {
     private final AuthorService authorService;
+    private final BookService bookService;
 
     @Autowired
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService, BookService bookService) {
         this.authorService = authorService;
+        this.bookService = bookService;
     }
 
     @RequestMapping("/authors")
@@ -30,9 +34,23 @@ public class AuthorController {
     }
 
     @RequestMapping("/newAuthor")
-    public String newAuthorPage(@ModelAttribute Author author) {
+    public String newAuthorPage(@ModelAttribute Author author, Model model) {
+        model.toString();
         authorService.save(author);
         return "authorEdit";
+    }
+
+    @RequestMapping("/newAuthorForBook")
+    public String newAuthorFromBookPage(@ModelAttribute Book book, Model model) {
+        model.toString();
+        model.asMap().get("author");
+        book = bookService.findById(book.getId()).get();
+        Author author = new Author();
+        authorService.save(author);
+        book.getAuthors().add(author);
+        bookService.save(book);
+        model.addAttribute(author);
+        return "redirect:/newAuthor?id="+author.getId();
     }
 
     @RequestMapping("/author")
