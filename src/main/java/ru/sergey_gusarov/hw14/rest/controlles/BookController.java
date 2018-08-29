@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.domain.books.Book;
 import ru.sergey_gusarov.hw14.domain.books.BookComment;
+import ru.sergey_gusarov.hw14.domain.books.Genre;
 import ru.sergey_gusarov.hw14.exception.NotFoundException;
 import ru.sergey_gusarov.hw14.service.books.AuthorService;
 import ru.sergey_gusarov.hw14.service.books.BookService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BookController {
@@ -51,7 +51,6 @@ public class BookController {
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public String editBook(@ModelAttribute Book book) {
         bookService.save(book);
-        String id = book.getId();
         return "redirect:/books";
     }
 
@@ -62,15 +61,14 @@ public class BookController {
     }
 
     @RequestMapping(value = "/delAuthorFromBook")
-    public String deleteAuthorFromBook(@ModelAttribute Book book, @RequestParam("authorId") String authorId, Model model) {
+    public String deleteAuthorFromBook(@ModelAttribute Book book, @RequestParam("authorId") String authorId) {
         Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
-        //Optional<Author> optionalAuthor = authorService.getById(authorId);
         Author authorForDel = bookFromDb.getAuthors().stream()
                 .filter(p -> p.getId().equals(authorId))
                 .findFirst().get();
         bookFromDb.getAuthors().remove(authorForDel);
         bookService.save(bookFromDb);
-        return "redirect:/book?id="+bookFromDb.getId();
+        return "redirect:/book?id=" + bookFromDb.getId();
     }
 
     @RequestMapping(value = "/newCommentForBook", method = RequestMethod.GET)
@@ -78,6 +76,30 @@ public class BookController {
         Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
         bookFromDb.getBookComments().add(new BookComment(""));
         bookService.save(bookFromDb);
-        return "redirect:/book?id="+bookFromDb.getId();
+        return "redirect:/book?id=" + bookFromDb.getId();
+    }
+
+    @RequestMapping(value = "/newGenreForBook", method = RequestMethod.GET)
+    public String addGenreBook(@ModelAttribute Book book) {
+        Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
+        bookFromDb.getGenres().add(new Genre(""));
+        bookService.save(bookFromDb);
+        return "redirect:/book?id=" + bookFromDb.getId();
+    }
+
+    @RequestMapping(value = "/delCommentForBook", method = RequestMethod.GET)
+    public String deleteBookComment(@ModelAttribute Book book, @RequestParam("commentNum") Integer commentNum) {
+        Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
+        bookFromDb.getBookComments().remove((int) commentNum);
+        bookService.save(bookFromDb);
+        return "redirect:/book?id=" + bookFromDb.getId();
+    }
+
+    @RequestMapping(value = "/delGenreForBook", method = RequestMethod.GET)
+    public String deleteGenreBook(@ModelAttribute Book book, @RequestParam("commentNum") Integer genreNum) {
+        Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
+        bookFromDb.getBookComments().remove((int) genreNum);
+        bookService.save(bookFromDb);
+        return "redirect:/book?id=" + bookFromDb.getId();
     }
 }

@@ -44,6 +44,25 @@
         <input id="holder-input" name="title" type="text" th:value="${book.title}" value="Book1"/>
     </div>
 
+    <h2>Genres</h2>
+    <div id="divGenres">
+        <fieldset>
+            <table align="left" width="50%">
+                <tr>
+                    <th>Genre</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="genre, itemStat : ${book.genres}">
+                    <td><input type="text" th:field="${book.genres[__${itemStat.index}__].name}"/></td>
+                    <td><a th:href="@{/delGenreForBook(id=${book.id}, genreNum=${__${itemStat.index}__})}" href="bookEdit.html">Del</a><td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <a th:href="@{/newGenreForBook(id=${book.id})}" href="bookEdit.html">Add comment</a>
+
+
+
     <div id="divAuthors">
         <h2>Authors</h2>
         <fieldset>
@@ -51,7 +70,7 @@
                 <tr>
                     <th>Author id</th>
                     <th>Author name</th>
-                    <th>Action delete</th>
+                    <th>Action</th>
                 </tr>
                 <tr th:each="author, itemStat : ${book.authors}">
                     <td><input type="text" readonly="readonly" th:field="${book.authors[__${itemStat.index}__].id}"/></td>
@@ -70,9 +89,11 @@
             <table align="left" width="50%">
                 <tr>
                     <th>Comment</th>
+                    <th>Action</th>
                 </tr>
                 <tr th:each="comment, itemStat : ${book.bookComments}">
                     <td><input type="text" th:field="${book.bookComments[__${itemStat.index}__].text}"/></td>
+                    <td><a th:href="@{/delCommentForBook(id=${book.id}, commentNum=${__${itemStat.index}__})}" href="bookEdit.html">Del</a><td>
                 </tr>
             </table>
         </fieldset>
