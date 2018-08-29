@@ -72,11 +72,12 @@
                     <th>Comment</th>
                 </tr>
                 <tr th:each="comment, itemStat : ${book.bookComments}">
-                    <td><input type="text" th:field="${bookComments[__${itemStat.index}__].comment}"/></td>
+                    <td><input type="text" th:field="${book.bookComments[__${itemStat.index}__].text}"/></td>
                 </tr>
             </table>
         </fieldset>
     </div>
+    <a th:href="@{/newCommentForBook(id=${book.id})}" href="bookEdit.html">Add comment</a>
 
     <div class="row">
         <button type="submit">Save</button>

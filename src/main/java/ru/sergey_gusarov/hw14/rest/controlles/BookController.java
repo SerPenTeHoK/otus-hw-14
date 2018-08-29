@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.sergey_gusarov.hw14.domain.books.Author;
 import ru.sergey_gusarov.hw14.domain.books.Book;
+import ru.sergey_gusarov.hw14.domain.books.BookComment;
 import ru.sergey_gusarov.hw14.exception.NotFoundException;
 import ru.sergey_gusarov.hw14.service.books.AuthorService;
 import ru.sergey_gusarov.hw14.service.books.BookService;
@@ -68,6 +69,14 @@ public class BookController {
                 .filter(p -> p.getId().equals(authorId))
                 .findFirst().get();
         bookFromDb.getAuthors().remove(authorForDel);
+        bookService.save(bookFromDb);
+        return "redirect:/book?id="+bookFromDb.getId();
+    }
+
+    @RequestMapping(value = "/newCommentForBook", method = RequestMethod.GET)
+    public String addCommentBook(@ModelAttribute Book book) {
+        Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
+        bookFromDb.getBookComments().add(new BookComment(""));
         bookService.save(bookFromDb);
         return "redirect:/book?id="+bookFromDb.getId();
     }
