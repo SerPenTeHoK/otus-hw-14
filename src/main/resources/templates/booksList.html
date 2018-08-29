@@ -8,7 +8,7 @@
             padding: 50px;
         }
 
-        .authors, .authors td {
+        .books, .books td {
             border: 1px solid lightgray;
             padding: 5px;
         }
@@ -23,21 +23,18 @@
     <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Action</th>
+        <th>Action edit</th>
+        <th>Action del</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td th:text="${book.title}">John Doe</td>
-        <td>
-            <a th:href="@{/book(id=${book.id})}" href="bookEdit.html">Edit</a>
-        </td>
-        <TD>
-            <a th:href="@{/deleteBook(id=${book.id})}" href="deleteBook">Del</a>
-        </TD>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}">1</td>
+            <td th:text="${book.title}">John Doe</td>
+            <td><a th:href="@{/book(id=${book.id})}" href="bookEdit.html">Edit</a></td>
+            <td><a th:href="@{/deleteBook(id=${book.id})}" href="deleteBook">Del</a></td>
+        </tr>
 
-    </tr>
     </tbody>
     <a th:href="@{/newBook}" href="bookEdit.html">Add book</a>
 </table>

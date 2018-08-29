@@ -20,6 +20,11 @@
         .row {
             margin-top: 10px;
         }
+        .authors, .authors td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -39,21 +44,29 @@
         <input id="holder-input" name="title" type="text" th:value="${book.title}" value="Book1"/>
     </div>
 
-    <div id="div">
+    <div id="divAuthors">
+        <h2>Authors</h2>
         <fieldset>
-            <h2>Authors</h2>
-            <table align="left" width="50%">
+            <table align="left" width="50%" class="authors">
                 <tr>
                     <th>Author id</th>
                     <th>Author name</th>
+                    <th>Action delete</th>
                 </tr>
                 <tr th:each="author, itemStat : ${book.authors}">
-                    <td><input type="text" th:field="${book.authors[__${itemStat.index}__].id}"/></td>
-                    <td><input type="text" th:field="${book.authors[__${itemStat.index}__].name}"/></td>
+                    <td><input type="text" readonly="readonly" th:field="${book.authors[__${itemStat.index}__].id}"/></td>
+                    <td><input type="text" readonly="readonly" th:field="${book.authors[__${itemStat.index}__].name}"/></td>
+                    <td><a th:href="@{/delAuthorFromBook(id=${book.id},authorId=${book.authors[__${itemStat.index}__].id})}" href="bookEdit.html">Del</a><td>
                 </tr>
-                <a th:href="@{/newAuthorForBook(id=${book.id})}" href="authorEdit.html">Add author</a>
             </table>
-            <h2>Comments</h2>
+        </fieldset>
+    </div>
+
+    <a th:href="@{/newAuthorForBook(id=${book.id})}" href="authorEdit.html">Add author</a>
+
+    <h2>Comments</h2>
+    <div id="divComments">
+        <fieldset>
             <table align="left" width="50%">
                 <tr>
                     <th>Comment</th>
