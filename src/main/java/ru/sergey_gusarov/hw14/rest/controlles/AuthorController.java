@@ -1,6 +1,7 @@
 package ru.sergey_gusarov.hw14.rest.controlles;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,9 @@ import java.util.List;
 public class AuthorController {
     private final AuthorService authorService;
     private final BookService bookService;
+
+    @Value("${error.message}")
+    private String errorMessage;
 
     @Autowired
     public AuthorController(AuthorService authorService, BookService bookService) {
@@ -50,20 +54,24 @@ public class AuthorController {
         book.getAuthors().add(author);
         bookService.save(book);
         model.addAttribute(author);
-        return "redirect:/newAuthor?id="+author.getId();
+        return "redirect:/newAuthor?id=" + author.getId();
     }
 
     @RequestMapping("/author")
     public String authorPage(@RequestParam("id") String id, Model model) {
         Author author = authorService.getById(id).orElseThrow(NotFoundException::new);
         model.addAttribute("author", author);
+        authorService.save(author);
         return "authorEdit";
     }
 
     @RequestMapping(value = "/author", method = RequestMethod.POST)
-    public String editAuthor(@ModelAttribute Author author) {
-        authorService.save(author);
-        String id = author.getId();
+    public String editAuthor(@ModelAttribute Author author, Model model) {
+        if (author.getName().isEmpty()) {
+            model.addAttribute("errorMessage", errorMessage);
+            return "redirect:/author?id=" + author.getId();
+        } else
+            authorService.save(author);
         return "redirect:/authors";
     }
 
