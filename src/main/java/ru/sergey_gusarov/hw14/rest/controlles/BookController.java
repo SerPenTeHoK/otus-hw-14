@@ -88,17 +88,17 @@ public class BookController {
     }
 
     @RequestMapping(value = "/delCommentForBook", method = RequestMethod.GET)
-    public String deleteBookComment(@ModelAttribute Book book, @RequestParam("commentNum") Integer commentNum) {
+    public String deleteBookComment(@ModelAttribute Book book, @RequestParam("commentNum") int commentNum) {
         Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
-        bookFromDb.getBookComments().remove((int) commentNum);
+        bookFromDb.getBookComments().remove(commentNum);
         bookService.save(bookFromDb);
         return "redirect:/book?id=" + bookFromDb.getId();
     }
 
     @RequestMapping(value = "/delGenreForBook", method = RequestMethod.GET)
-    public String deleteGenreBook(@ModelAttribute Book book, @RequestParam("commentNum") Integer genreNum) {
+    public String deleteGenreBook(@ModelAttribute Book book, @RequestParam("genreNum") int genreNum) {
         Book bookFromDb = bookService.findById(book.getId()).orElseThrow(NotFoundException::new);
-        bookFromDb.getBookComments().remove((int) genreNum);
+        bookFromDb.getGenres().remove(genreNum);
         bookService.save(bookFromDb);
         return "redirect:/book?id=" + bookFromDb.getId();
     }
