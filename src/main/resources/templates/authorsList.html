@@ -3,39 +3,33 @@
 <head>
     <meta charset="UTF-8"/>
     <title>List of all authors</title>
-    <style type="text/css">
-        body {
-            padding: 50px;
-        }
 
-        .authors, .authors td {
-            border: 1px solid lightgray;
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
 </head>
 <body>
 <h1>Authors:</h1>
 <a href="/">Return to main page</a>
 <BR>
-<table class="authors">
+<table class="blueTable">
     <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Action</th>
+        <th>Action edit</th>
+        <th>Action del</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="author : ${authors}">
         <td th:text="${author.id}">1</td>
         <td th:text="${author.name}">John Doe</td>
-        <td>
+        <td width="5%">
             <a th:href="@{/author(id=${author.id})}" href="authorEdit.html">Edit</a>
         </td>
-        <TD>
+        <td width="5%">
             <a th:href="@{/deleteAuthor(id=${author.id})}" href="deleteAuthor">Del</a>
-        </TD>
+        </td>
     </tr>
     </tbody>
     <a th:href="@{/newAuthor}" href="authorEdit.html">Add author</a>
