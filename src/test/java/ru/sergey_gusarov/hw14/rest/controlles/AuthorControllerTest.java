@@ -12,35 +12,63 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.view.AbstractUrlBasedView;
+import org.springframework.web.servlet.view.InternalResourceView;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+/*
+@ExtendWith(SpringExtension.class)
+
+@ComponentScan("ru.sergey_gusarov.hw14.repository")
+@WebAppConfiguration
+*/
+//@ContextConfiguration(classes = Application.class)
+//@ContextConfiguration(classes = Config.class)
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AuthorController.class)
 @DataMongoTest
-@ComponentScan("ru.sergey_gusarov.hw14")
-@ContextConfiguration(classes= Application.class)
+@SpringBootTest
+//@WebAppConfiguration
+//@WebMvcTest(controllers = AuthorController.class)
+
 class AuthorControllerTest {
+
+    public class StandaloneMvcTestViewResolver extends InternalResourceViewResolver {
+
+        public StandaloneMvcTestViewResolver() {
+            super();
+        }
+
+        @Override
+        protected AbstractUrlBasedView buildView(final String viewName) throws Exception {
+            final InternalResourceView view = (InternalResourceView) super.buildView(viewName);
+            // prevent checking for circular view paths
+            view.setPreventDispatchLoop(false);
+            return view;
+        }
+    }
+
     @Autowired
-    private MockMvc mvc;
+    private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
     @MockBean
     private AuthorController authorController;
 
     @BeforeEach
     void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).setViewResolvers(new StandaloneMvcTestViewResolver()).build();
+        // mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
     @Test
@@ -49,7 +77,7 @@ class AuthorControllerTest {
         model.addAttribute("test", "test");
         given(authorController.listAuthorPage(model))
                 .willReturn("list book");
-        this.mvc.perform(get("/authors")).
+        this.mockMvc.perform(get("/authors")).
                 andExpect(status().isOk()).
                 andExpect(content().string("list book"));
     }
