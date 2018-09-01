@@ -58,10 +58,10 @@ public class AuthorController {
     }
 
     @RequestMapping("/author")
-    public String authorPage(@RequestParam("id") String id, Model model) {
-        Author author = authorService.getById(id).orElseThrow(NotFoundException::new);
-        model.addAttribute("author", author);
-        authorService.save(author);
+    public String authorPage(@ModelAttribute Author author, Model model) {
+        Author authorFromDb = authorService.getById(author.getId()).orElseThrow(NotFoundException::new);
+        model.addAttribute("author", authorFromDb);
+        authorService.save(authorFromDb);
         return "authorEdit";
     }
 
