@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import ru.sergey_gusarov.hw14.domain.books.Author;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
 @SpringBootTest
+@WebAppConfiguration
 //@WebAppConfiguration
 //@WebMvcTest(controllers = AuthorController.class)
 
@@ -60,6 +62,7 @@ class AuthorControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
+
     private MockMvc mockMvc;
 
     @MockBean
@@ -67,8 +70,9 @@ class AuthorControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(authorController).setViewResolvers(new StandaloneMvcTestViewResolver()).build();
+        //mockMvc = MockMvcBuilders.standaloneSetup(authorController).setViewResolvers(new StandaloneMvcTestViewResolver()).build();
         // mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).dispatchOptions(true).build();
     }
 
     @Test
@@ -83,7 +87,16 @@ class AuthorControllerTest {
     }
 
     @Test
-    void newAuthorPage() {
+    void newAuthorPage() throws Exception {
+        Model model = new ConcurrentModel();
+        model.addAttribute("test", "test");
+        Author author = new Author("a1");
+        given(authorController.newAuthorPage(author, model))
+                .willReturn("list book");
+        this.mockMvc.perform(get("/newAuthor")).
+                andExpect(status().isOk()).
+                andExpect(content().string("list book"));
+
     }
 
     @Test

@@ -39,7 +39,6 @@ public class AuthorController {
 
     @RequestMapping("/newAuthor")
     public String newAuthorPage(@ModelAttribute Author author, Model model) {
-        model.toString();
         authorService.save(author);
         return "authorEdit";
     }
