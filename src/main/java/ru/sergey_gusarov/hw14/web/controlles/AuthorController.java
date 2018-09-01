@@ -1,4 +1,4 @@
-package ru.sergey_gusarov.hw14.rest.controlles;
+package ru.sergey_gusarov.hw14.web.controlles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
