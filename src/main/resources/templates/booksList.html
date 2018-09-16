@@ -85,8 +85,8 @@
         <tr th:each="book : ${books}">
             <td th:text="${book.id}">1</td>
             <td th:text="${book.title}">John Doe</td>
-            <td width="5%"><a th:href="@{/book(id=${book.id})}" href="bookEdit.html">Edit</a></td>
-            <td width="5%"><a th:href="@{/deleteBook(id=${book.id})}" href="deleteBook">Del</a></td>
+            <td width="20"><a th:href="@{/book(id=${book.id})}" href="bookEdit.html">Edit</a></td>
+            <td width="20"><a th:href="@{/deleteBook(id=${book.id})}" href="deleteBook">Del</a></td>
         </tr>
 
     </tbody>
